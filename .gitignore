@@ -1,0 +1,25 @@
+# Database setup file
+mongo-root
+
+# Docker shared volumes
+.docker/*
+!.docker/mongodb/
+.docker/mongodb/data
+!.docker/mongodb/initdb.d/
+!.docker/mongodb/mongo.conf
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Environment variables
+.env
+
+# System files
+.DS_Store
+
+# Project dependencies
+**/node_modules/
