@@ -11,4 +11,4 @@ COPY . .
 
 COPY ./.env .
 
-CMD [ "yarn", "start" ]
+CMD [ "yarn", "start:prod" ]
