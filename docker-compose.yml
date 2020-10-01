@@ -27,21 +27,22 @@ services:
           - database
   frontend:
     build:
-      context: .
       dockerfile: ./frontend/Dockerfile
     container_name: oyster-test-frontend
     ports:
-      - 80:80
+      - 3001:3000
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
     depends_on:
       - backend
     networks:
       main:
         aliases:
           - frontend
-    command: ['tail', '-f', '/dev/null']
+    command: ['yarn', 'start']
   backend:
     build:
-      context: .
       dockerfile: ./backend/Dockerfile
     container_name: oyster-test-backend
     working_dir: /app
@@ -49,12 +50,12 @@ services:
       - database
     ports:
       - 3000:3000
-    #    volumes:
-    #      - ./parking-admin-app:/app
-    #      - /app/node_modules
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
     networks:
       database:
       main:
         aliases:
           - backend
-    command: ['yarn', 'start']
+    command: ['yarn', 'start:dev']
