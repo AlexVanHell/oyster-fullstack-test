@@ -4,13 +4,10 @@ networks:
   database:
   frontend:
 
-volumes:
-  mongo_data:
-
 services:
   database:
     image: mongo:4.4
-    container_name: oyster-test-database
+    container_name: oyster-test-database-prod
     env_file:
       - ./.env
     environment:
@@ -19,49 +16,35 @@ services:
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
     ports:
       - 27017:27017
-    volumes:
-      - ./.docker/mongodb/mongod.conf:/etc/mongod.conf
-      - ./.docker/mongodb/initdb.d/:/docker-entrypoint-initdb.d/
-      - mongo_data:/data/db/
-      - ./.docker/mongodb/data/log/:/var/log/mongodb/
     networks:
       database:
         aliases:
           - database
   backend:
     build:
-      context: ./backend
-      dockerfile: ./backend/Dockerfile
-    container_name: oyster-test-backend
+      dockerfile: ./backend/Dockerfile.prod
+    container_name: oyster-test-backend-prod
     working_dir: /app
     depends_on:
       - database
     ports:
       - 3000:3000
-    volumes:
-      - ./backend:/app
-      - /app/node_modules
     networks:
       database:
       frontend:
         aliases:
           - backend
-    command: ['yarn', 'start:dev']
+    command: ['yarn', 'start:prod']
   frontend:
     build:
-      context: ./frontend
-      dockerfile: ./frontend/Dockerfile
-    container_name: oyster-test-frontend
-    working_dir: /app
+      dockerfile: ./frontend/Dockerfile.prod
+    container_name: oyster-test-frontend-prod
     ports:
-      - 3001:3000
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
+      - 80:80
     depends_on:
       - backend
     networks:
       frontend:
         aliases:
           - frontend
-    command: ['yarn', 'start']
+    command: ['tail', '-f', '/dev/null']
