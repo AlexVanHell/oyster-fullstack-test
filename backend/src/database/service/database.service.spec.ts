@@ -5,10 +5,10 @@ import { DatabaseService } from './database.service';
 describe('DatabaseService', () => {
 	let service: DatabaseService;
 
-	beforeEach(async () => {
+	beforeAll(async () => {
 		const module: TestingModule = await Test.createTestingModule({
-      providers: [DatabaseService],
-      imports: [ConfigModule]
+			providers: [DatabaseService],
+			imports: [ConfigModule],
 		}).compile();
 
 		service = module.get<DatabaseService>(DatabaseService);
@@ -20,10 +20,10 @@ describe('DatabaseService', () => {
 
 	describe('.createMongooseOptions()', () => {
 		it('should create connection options', () => {
-      const obj = service.createMongooseOptions();
+			const obj = service.createMongooseOptions();
 
-      expect(typeof obj).toBe('object');
-      expect(Object.keys(obj)).toEqual(expect.arrayContaining(['uri', 'auth']));
-    });
+			expect(typeof obj).toBe('object');
+			expect(Object.keys(obj)).toEqual(expect.arrayContaining(['uri', 'auth']));
+		});
 	});
 });

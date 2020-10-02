@@ -4,7 +4,7 @@ import { ConfigService } from './config.service';
 describe('ConfigService', () => {
 	let service: ConfigService;
 
-	beforeEach(async () => {
+	beforeAll(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			providers: [ConfigService],
 		}).compile();

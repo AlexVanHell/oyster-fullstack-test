@@ -7,7 +7,7 @@ describe('PasswordUtilService', () => {
 	let service: PasswordUtilService;
 	let configService: ConfigService;
 
-	beforeEach(async () => {
+	beforeAll(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			providers: [PasswordUtilService],
 			imports: [ConfigModule],

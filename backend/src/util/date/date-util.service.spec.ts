@@ -4,7 +4,7 @@ import { DateUtilService } from './date-util.service';
 describe('DateUtilService', () => {
 	let service: DateUtilService;
 
-	beforeEach(async () => {
+	beforeAll(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			providers: [DateUtilService],
 		}).compile();

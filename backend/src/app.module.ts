@@ -2,12 +2,13 @@ import { Logger, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigService } from './config/service/config.service';
+import { AuthModule } from './module/auth/auth.module';
 import { UserService } from './module/user/service/user.service';
 import { UserModule } from './module/user/user.module';
 import { SharedModule } from './shared/shared.module';
 
 @Module({
-	imports: [SharedModule, UserModule],
+	imports: [SharedModule, UserModule, AuthModule],
 	controllers: [AppController],
 	providers: [AppService],
 })
@@ -18,8 +19,10 @@ export class AppModule {
 	) {}
 
 	public async onModuleInit() {
+		const processEnv = process.env;
+
 		Logger.log(
-			`You can see api-docs at http://localhost:${process.env.PORT}/api-docs`,
+			`You can see api-docs at http://localhost:${processEnv.PORT}/api-docs`,
 			AppModule.name,
 		);
 
@@ -36,6 +39,7 @@ export class AppModule {
 			if (!exists) {
 				await this.userService.create({
 					...admin,
+					password: processEnv['env_admin_password'],
 				});
 				if (debugMode) {
 					Logger.log(`User created`, AppModule.name);

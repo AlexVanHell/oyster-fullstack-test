@@ -1,14 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Exclude } from 'class-transformer';
 
 /**
  * @template I Id type
  */
 export interface BaseDtoInterface {
 	_id: string;
-	createdAt: Date;
-	updatedAt: Date;
-	deletedAt: Date;
+	active?: boolean;
+	createdAt?: Date;
+	updatedAt?: Date;
 }
 
 /**
@@ -23,17 +22,20 @@ export class BaseDto implements BaseDtoInterface {
 	_id: string;
 
 	@ApiProperty({
+		description: `Item's active status`,
+		example: new Date().toISOString(),
+	})
+	active?: boolean;
+
+	@ApiProperty({
 		description: 'Creation date',
 		example: new Date().toISOString(),
 	})
-	createdAt: Date;
+	createdAt?: Date;
 
 	@ApiProperty({
 		description: 'Last update date',
 		example: new Date().toISOString(),
 	})
-	updatedAt: Date;
-
-	@Exclude()
-	deletedAt: Date;
+	updatedAt?: Date;
 }
