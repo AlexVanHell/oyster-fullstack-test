@@ -1,26 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
+import { I18nProvider } from '@lingui/react';
+import React, { Fragment } from 'react';
 import './App.css';
+import ProtectedLayout from './layout/ProtectedLayout';
+import PublicLayout from './layout/PublicLayout';
+import catalogEs from './locale/es/messages';
+
+const catalgos = { es: catalogEs as any };
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<Fragment>
+			<I18nProvider language={'es'} catalogs={catalgos}>
+				<PublicLayout />
+				<ProtectedLayout />
+			</I18nProvider>
+		</Fragment>
+	);
 }
 
 export default App;

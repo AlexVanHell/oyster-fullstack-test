@@ -4,6 +4,9 @@ networks:
   database:
   frontend:
 
+volumes:
+  mongo_data:
+
 services:
   database:
     image: mongo:4.4
@@ -25,23 +28,9 @@ services:
       database:
         aliases:
           - database
-  frontend:
-    build:
-      context: .
-      dockerfile: ./frontend/Dockerfile
-    container_name: oyster-test-frontend
-    ports:
-      - 80:80
-    depends_on:
-      - backend
-    networks:
-      main:
-        aliases:
-          - frontend
-    command: ['tail', '-f', '/dev/null']
   backend:
     build:
-      context: .
+      context: ./backend
       dockerfile: ./backend/Dockerfile
     container_name: oyster-test-backend
     working_dir: /app
@@ -49,12 +38,30 @@ services:
       - database
     ports:
       - 3000:3000
-    #    volumes:
-    #      - ./parking-admin-app:/app
-    #      - /app/node_modules
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
     networks:
       database:
-      main:
+      frontend:
         aliases:
           - backend
+    command: ['yarn', 'start:dev']
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ./frontend/Dockerfile
+    container_name: oyster-test-frontend
+    working_dir: /app
+    ports:
+      - 3001:3000
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      frontend:
+        aliases:
+          - frontend
     command: ['yarn', 'start']
