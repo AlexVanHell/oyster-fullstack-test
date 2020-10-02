@@ -36,6 +36,9 @@ Frontend was created with `create-react-app` command and it uses the dependencie
 - React-Router
 - Axios
 - Jest
+- Formik
+- React-Redux
+- React-Bootstrap
 
 ## First steps
 
