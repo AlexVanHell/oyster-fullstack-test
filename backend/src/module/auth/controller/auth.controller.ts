@@ -29,7 +29,10 @@ export class AuthController {
 		description: 'User information and its token',
 		type: AuthDto,
 	})
-	@ApiExceptionResponse(API_ERRORS.module.USER.WRONG_CREDENTIALS)
+	@ApiExceptionResponse(
+		API_ERRORS.module.USER.NO_BASIC_AUTH,
+		API_ERRORS.module.USER.WRONG_CREDENTIALS,
+	)
 	public async login(@AuthUser() user: UserDto) {
 		return this.service.login(user);
 	}
