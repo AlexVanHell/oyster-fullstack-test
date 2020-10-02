@@ -1,19 +1,19 @@
 import { MongooseModule } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
+import { ConfigService } from '../../../config/service/config.service';
 import { DatabaseModuleTest } from '../../../database/database.module.test';
 import { USER_MOCK } from '../../../mock/user.mock';
-import { SharedModule } from '../../../shared/shared.module';
+import { PasswordUtilService } from '../../../util/password/password.util.service';
 import { UserDocument, UserSchema } from '../user.schema';
 import { UserService } from './user.service';
 
 describe('UserService', () => {
 	let service: UserService;
 
-	beforeEach(async () => {
+	beforeAll(async () => {
 		const module: TestingModule = await Test.createTestingModule({
-			providers: [UserService],
+			providers: [UserService, ConfigService, PasswordUtilService],
 			imports: [
-				SharedModule,
 				DatabaseModuleTest({
 					connectionName: (new Date().getTime() * Math.random()).toString(16), // <-- This is to have a "unique" name for the connection,
 				}),
@@ -26,13 +26,20 @@ describe('UserService', () => {
 		service = module.get<UserService>(UserService);
 	});
 
+	beforeEach(async () => {
+		const uncleared = await service.getAll();
+		for (const user of uncleared) {
+			await service.deleteById(user._id);
+		}
+	});
+
 	it('should be defined', () => {
 		expect(service).toBeDefined();
 	});
 
 	describe('.create()', () => {
 		it('should save the user and add the createdAt and savedAt fields', async () => {
-			const testUser = USER_MOCK[0];
+			const testUser = { ...USER_MOCK[0] };
 			const result = await service.create(testUser);
 
 			expect(typeof result).toBe('object');
@@ -43,7 +50,7 @@ describe('UserService', () => {
 		});
 
 		it('should throw error if user username or email are already in use', async () => {
-			const testUser = USER_MOCK[0];
+			const testUser = { ...USER_MOCK[0] };
 			await service.create(testUser);
 
 			let result: UserDocument;

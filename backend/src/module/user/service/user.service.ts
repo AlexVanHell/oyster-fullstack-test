@@ -27,6 +27,10 @@ export class UserService extends SimpleCrudService<UserDocument> {
 	public async create(data: Partial<UserDocumentInterface>) {
 		await this.checkDuplicateUser(data.username, data.email);
 
+		if (!data.password) {
+			data.password = this.passwordService.generateRandom(4);
+		}
+
 		// Encrypt password
 		const password = await this.passwordService.hashString(
 			data.password,

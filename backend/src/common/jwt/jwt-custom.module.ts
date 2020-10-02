@@ -2,23 +2,18 @@ import { DynamicModule, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { Algorithm, SignOptions } from 'jsonwebtoken';
 import { ConfigModule } from '../../config/config.module';
-import { ConfigJwtOptionsInterface } from '../../config/interface/config-jwt-options.interface';
-import { ConfigInterface } from '../../config/interface/config.interface';
 import { ConfigService } from '../../config/service/config.service';
-import { ExtractKeysOfValueType } from '../type/extract-keys-of-value.type';
 
 @Module({
 	imports: [ConfigModule],
 })
 export class JwtCustomModule {
-	public static forRoot(
-		name: ExtractKeysOfValueType<ConfigInterface, ConfigJwtOptionsInterface>,
-	): DynamicModule {
+	public static forRoot(): DynamicModule {
 		// For more information visit: https://github.com/nestjs/jwt
 		const jwtModule = JwtModule.registerAsync({
 			imports: [ConfigModule],
 			useFactory: async (configService: ConfigService) => {
-				const jwtOptions = configService.get(name);
+				const jwtOptions = configService.get('auth');
 				const extras: {
 					issuer?: SignOptions['issuer'];
 					audience?: SignOptions['audience'];
@@ -52,12 +47,13 @@ export class JwtCustomModule {
 			imports: [jwtModule],
 			providers: [
 				{
-					provide: `${name}JwtOptions`,
-					useFactory: (configService: ConfigService) => configService.get(name),
+					provide: `authJwtOptions`,
+					useFactory: (configService: ConfigService) =>
+						configService.get('auth'),
 					inject: [ConfigService],
 				},
 			],
-			exports: [`${name}JwtOptions`, jwtModule],
+			exports: [`authJwtOptions`, jwtModule],
 		};
 	}
 }

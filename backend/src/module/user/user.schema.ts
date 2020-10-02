@@ -12,7 +12,9 @@ export interface UserDocumentInterface extends BaseDocumentInterface {
 	password?: string;
 }
 
-@Schema()
+@Schema({
+	collection: 'user',
+})
 export class UserDocument extends BaseDocument
 	implements UserDocumentInterface {
 	@Prop()

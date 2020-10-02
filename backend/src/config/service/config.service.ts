@@ -85,7 +85,6 @@ export class ConfigService {
 				email: processEnv['env_admin_email'],
 				firstname: 'Admin',
 				lastname: 'Admin',
-				password: processEnv['env_admin_password'],
 			},
 		};
 	}
