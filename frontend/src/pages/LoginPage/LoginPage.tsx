@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import LoginForm from '../components/LoginForm';
+import LoginForm from '../../components/LoginForm/LoginForm';
+import './LoginPage.scss';
 
 export class LoginPage extends Component {
 	static propTypes = {};
@@ -14,8 +14,10 @@ export class LoginPage extends Component {
 	}
 }
 
-const mapStateToProps = (state: any) => ({});
+/* const mapStateToProps = (state: any) => ({});
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage); */
+
+export default LoginPage;

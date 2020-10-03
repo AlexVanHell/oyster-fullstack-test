@@ -1,0 +1,36 @@
+$navbar-bg: #fff;
+$navbar-height: 64px;
+
+.Navbar-container {
+	position: fixed;
+	width: 100%;
+	height: $navbar-height;
+	background-color: $navbar-bg;
+	box-shadow: 0 0 4px rgba($color: #000, $alpha: 0.2);
+
+	.Navbar-content {
+		display: flex;
+		flex-direction: row;
+		justify-content: left;
+		align-items: center;
+		height: 100%;
+		width: 100%;
+		box-sizing: border-box;
+		padding: 0 24px;
+
+		h2 {
+			flex-grow: 1;
+		}
+
+		.Navbar-right-info {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: flex-end;
+		}
+	}
+}
+
+.Navbar-space {
+	height: $navbar-height;
+}
