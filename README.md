@@ -76,15 +76,23 @@ $ docker-compose -f docker-compose.prod.yml up -d --build
 
 In order to start the full project follow the next steps:
 
-1. Copy `.env.example` content into a new file `.env`
+1. Copy `./backend/.env.example` content into a new file `./backend/.env`
 
 ```bash
-$ cp ./.env.example ./env
+$ cp ./backend/.env.example ./backend/.env
 ```
 
-2. Replace values in your `.env` file. NOTE: Its recomended only to change variables for `env_admin` for this test
+2. Replace values in `./backend/.env`
 
-3. Run `docker-compose` commad:
+3. Copy `./frontend/.env.example` content into a new file `./frontend/.env`
+
+```bash
+$ cp ./frontend/.env.example ./frontend/.env.local
+```
+
+4. Replace values in `./frontend/.env.local`
+
+5. Run `docker-compose` commad:
 
 ```bash
 $ docker-compose up -d --build

@@ -1,5 +1,21 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Environment configuration
+
+First be sure to be positioned in the frontend folder
+
+```bash
+$ cd ./frontend
+```
+
+Then copy the contents `.env.example` file into a new file `.env.local`
+
+```bash
+$ cp ./.env.example ./.env.local
+```
+
+And finally replace the values in `.env.local` for the values you need for your environment
+
 ## Available Scripts
 
 In the project directory, you can run:
