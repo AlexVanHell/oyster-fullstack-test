@@ -25,6 +25,11 @@
 			"last 1 safari version"
 		]
 	},
+	"jest": {
+		"transformIgnorePatterns": [
+			"/node_modules/(?!intl-messageformat|intl-messageformat-parser).+\\.js$"
+		]
+	},
 	"dependencies": {
 		"@fortawesome/fontawesome-svg-core": "^1.2.31",
 		"@fortawesome/free-solid-svg-icons": "^5.15.0",

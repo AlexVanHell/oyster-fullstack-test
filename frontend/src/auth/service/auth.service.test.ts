@@ -83,14 +83,14 @@ describe('AuthService', () => {
 		expect(updated?.firstname).toBe('FooBar');
 	});
 
-	it('should remove user and token', () => {
+	it('should remove user and token', async () => {
 		service.setUser(testUser);
 		service.setToken(testToken);
 
-		service.deleteUser();
+		await service.deleteUser();
 
-		expect(service.getUser()).toBe(null);
-		expect(service.getToken()).toBe(null);
+		expect(service.getUser()).not.toBeDefined();
+		expect(service.getToken()).not.toBeDefined();
 	});
 
 	it('should build authorization header', () => {
@@ -102,5 +102,15 @@ describe('AuthService', () => {
 		expect(headers.Authorization).toBeDefined();
 		expect(typeof headers.Authorization).toBe('string');
 		expect(headers.Authorization).toBe(`Bearer ${testToken}`);
+	});
+
+	it('should authenticate', async () => {
+		const result = await service.authenticate(testUser, testToken);
+
+		expect(result).toBeDefined();
+		expect(result.user).toBeDefined();
+		expect(result.token).toBeDefined();
+		expect(localStorage.getItem(fakeEnv.sessionKey)).toBeDefined();
+		expect(typeof localStorage.getItem(fakeEnv.sessionKey)).toBe('string');
 	});
 });

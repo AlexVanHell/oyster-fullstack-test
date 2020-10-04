@@ -1,4 +1,11 @@
 export default {
+	API_ERRORS: {
+		GEN00: 'Error interno del servidor. Contacte al administrador',
+		GEN01: 'Error interno del servidor. Contacte al administrador',
+		USR03: 'Usuario y/o contraseña incorrectos',
+		USR06:
+			'No se esta proporcionando correctamente la petición a la API, contacte al administrador',
+	},
 	loading: 'Cargando...',
 	login: {
 		title: 'Iniciar sesión',
@@ -13,6 +20,7 @@ export default {
 				required: 'La contraseña es requerida',
 			},
 		},
+		success: 'Iniciando sesión...',
 	},
 	dashboard: {
 		title: 'Inicio',

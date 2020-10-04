@@ -6,51 +6,49 @@ import {
 	FormikHelpers,
 	FormikProps,
 } from 'formik';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import Alert from 'react-bootstrap/Alert';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
-import {
-	FormattedMessage,
-	injectIntl,
-	WrappedComponentProps,
-} from 'react-intl';
-import { AuthService } from '../../auth/service/auth.service';
-import {
-	injectServices,
-	InjectServicesWrappedProps,
-} from '../../HOCs/inject-services.hoc';
-import { AuthApiService } from '../../services/api/auth-api/auth-api.service';
+import { FormattedMessage } from 'react-intl';
 import ButtonLoading from '../ButtonLoading/ButtonLoading';
 import LoginFormField from '../LoginFormField/LoginFormField';
 import PasswordPreview from '../PasswordPreview/PasswordPreview';
 import './LoginForm.scss';
-
-export interface LoginFormState {
-	username: string;
-	password: string;
-	submitted: boolean;
-}
 
 export interface LoginFormValues {
 	username: string;
 	password: string;
 }
 
-export class LoginForm extends Component<
-	WrappedComponentProps &
-		InjectServicesWrappedProps<'authService' | 'authApiService'>
-> {
-	static propTypes = {};
+export interface LoginFormProps {
+	alertMessage: { variant: 'success' | 'danger'; id: string } | undefined;
+	/**
+	 * @param values Values from form
+	 * @param done Callback to notify submit done
+	 */
+	onFormSubmitted: (values: LoginFormValues, done: () => void) => void;
+	onFormValueChange: (values: LoginFormValues, isValid: boolean) => void;
+}
+
+export class LoginForm extends Component<LoginFormProps> {
+	static propTypes = {
+		alertMessage: PropTypes.shape({
+			variant: PropTypes.oneOf(['success', 'danger']).isRequired,
+			id: PropTypes.string.isRequired,
+		}),
+		onFormSubmitted: PropTypes.func.isRequired,
+		onFormValueChange: PropTypes.func.isRequired,
+	};
 
 	private validateField(value: string, id: string) {
 		let error = '';
 
 		if (!value || !value.trim().length) {
-			error = this.props.intl.formatMessage({
-				id,
-			});
+			error = id;
 		}
 
 		return error;
@@ -64,29 +62,23 @@ export class LoginForm extends Component<
 		return this.validateField(value, 'login.validation.password.required');
 	}
 
+	private handleFormChange(values: LoginFormValues, isValid: boolean) {
+		this.props.onFormValueChange(values, isValid);
+	}
+
 	private async handleSubmit(
 		values: LoginFormValues,
 		{ setSubmitting }: FormikHelpers<LoginFormValues>,
 	) {
 		setSubmitting(true);
-
-		setTimeout(async () => {
-			await this.login(values);
+		this.props.onFormSubmitted(values, () => {
 			setSubmitting(false);
-		}, 500);
-	}
-
-	private async login(values: LoginFormValues) {
-		const response = await this.props.services.authApiService.login(
-			values.username,
-			values.password,
-		);
-
-		this.props.services.authService.setUser(response.user);
-		this.props.services.authService.setToken(response.token.accessToken);
+		});
 	}
 
 	render() {
+		const { alertMessage } = this.props;
+
 		const formikProps: FormikConfig<LoginFormValues> = {
 			initialValues: { username: '', password: '' },
 			onSubmit: (values, formikHelpers) => {
@@ -94,19 +86,31 @@ export class LoginForm extends Component<
 			},
 		};
 
-		console.log(this.props);
-
 		return (
 			<div className="LoginForm-container">
 				<Card>
 					<Card.Body>
 						<div className="py-3">
-							<h1 className="LoginForm-title text-center text-primary">
-								<FormattedMessage description="Title" id={'login.title'} />
-							</h1>
+							<Row>
+								<Col xs={12}>
+									<h1 className="LoginForm-title text-center text-primary">
+										<FormattedMessage description="Title" id={'login.title'} />
+									</h1>
+								</Col>
+								{alertMessage && (
+									<Col className="py-1" xs={12}>
+										<Alert className="m-0" variant={alertMessage.variant}>
+											<FormattedMessage id={alertMessage.id} />
+										</Alert>
+									</Col>
+								)}
+							</Row>
+
 							<Formik {...formikProps}>
-								{({ isValid, isSubmitting }: FormikProps<any>) => (
-									<FormikForm>
+								{({ isValid, isSubmitting, values }: FormikProps<any>) => (
+									<FormikForm
+										onChange={() => this.handleFormChange(values, isValid)}
+									>
 										<Row className="LoginForm-inputs-container">
 											<Col xs={12} className="pb-3">
 												<LoginFormField
@@ -138,12 +142,13 @@ export class LoginForm extends Component<
 											<Col>
 												<ButtonLoading
 													variant={'primary'}
-													loading={isValid && isSubmitting}
+													loading={isValid && !!isSubmitting}
 													textId={'login.start_button'}
 													icon={{ position: 'right', value: faSignInAlt }}
 													type={'submit'}
 													block={true}
-													disabled={!isValid || isSubmitting}
+													size={'lg'}
+													disabled={!isValid || !!isSubmitting}
 												/>
 											</Col>
 										</Row>
@@ -158,16 +163,4 @@ export class LoginForm extends Component<
 	}
 }
 
-/* const mapStateToProps = (state: LoginFormState) => ({});
-
-const mapDispatchToProps = {};
-
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps,
-)(injectIntl(LoginForm)); */
-
-export default injectServices(injectIntl(LoginForm), [
-	AuthApiService,
-	AuthService,
-]);
+export default LoginForm;

@@ -1,28 +1,40 @@
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component, Fragment } from 'react';
 import Button from 'react-bootstrap/Button';
-import { FormattedMessage } from 'react-intl';
 import {
 	AuthUserWrappedProps,
 	withAuthUser,
 } from '../../HOCs/with-auth-user.hoc';
+import LogoutButton from '../LogoutButton/LogoutButton';
 import './Navbar.scss';
 
 export class Navbar extends Component<AuthUserWrappedProps> {
 	static propTypes = {};
 
 	render() {
+		const {
+			authUser: {
+				value: { firstname },
+			},
+		} = this.props;
+
 		return (
 			<Fragment>
 				<div className="Navbar-container">
 					<div className="Navbar-content">
-						<h2 className="m-0 p-2">Oyster</h2>
+						<div className="Navbar-logo-container">
+							<img src="/logo192.png" alt="App Logo" />
+						</div>
+						<h2 className="m-0">Oyster</h2>
 						<div className="Navbar-right-info">
-							<Button variant={'danger'}>
-								<FormattedMessage id={'dashboard.logout'} />
-								<FontAwesomeIcon className="ml-3" icon={faSignOutAlt} />
-							</Button>
+							<div className="Navbar-user-container px-2">
+								<Button variant={'light'} size={'lg'}>
+									<FontAwesomeIcon className="mr-3" icon={faUser} />
+									{firstname}
+								</Button>
+							</div>
+							<LogoutButton />
 						</div>
 					</div>
 				</div>

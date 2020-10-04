@@ -27,7 +27,12 @@ export class ButtonLoading extends Component<ButtonLoadingProps> {
 	};
 
 	private buildIcon(icon: ButtonLoadingIconProp) {
-		return <FontAwesomeIcon className="ml-3" icon={icon.value} />;
+		return (
+			<FontAwesomeIcon
+				className={icon.position === 'left' ? 'mr-3' : 'ml-3'}
+				icon={icon.value}
+			/>
+		);
 	}
 
 	render() {

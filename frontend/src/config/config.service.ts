@@ -26,9 +26,9 @@ export class ConfigService {
 
 	private setEnv() {
 		this.env = {
-			apiBase: process.env['api_base'] || '',
-			sessionKey: process.env['session_key'] || 'session',
-			tokenKey: process.env['token_key'] || 'token',
+			apiBase: process.env['REACT_APP_API_BASE'] || '',
+			sessionKey: process.env['REACT_APP_SESSION_KEY'] || 'session',
+			tokenKey: process.env['REACT_APP_TOKEN_KEY'] || 'token',
 		};
 	}
 }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Redirect } from 'react-router-dom';
 import {
 	AuthUserWrappedProps,
 	withAuthUser,
@@ -10,14 +9,10 @@ export class WelcomeCard extends Component<AuthUserWrappedProps> {
 	static propTypes = {};
 
 	render() {
-		console.log(this.props);
-
-		if (!this.props.authUser) {
-			return <Redirect to="/login" />;
-		}
-
 		const {
-			authUser: { firstname, lastname },
+			authUser: {
+				value: { firstname, lastname },
+			},
 		} = this.props;
 
 		return (

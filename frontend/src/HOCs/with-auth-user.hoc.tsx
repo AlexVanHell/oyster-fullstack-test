@@ -1,15 +1,19 @@
 import React, { ComponentType, FunctionComponent } from 'react';
-import { AuthUserContext } from '../common/context/auth-user.context';
-import { UserModel } from '../common/model/user.model';
+import {
+	AuthUserContext,
+	AuthUserContextInterface,
+} from '../common/context/auth-user.context';
 
 export interface AuthUserWrappedProps {
-	authUser: UserModel;
+	authUser: AuthUserContextInterface;
 }
 
-type WithAuthUserProps<P> = Omit<P, keyof AuthUserWrappedProps> & {};
+type WithAuthUserProps<P> = Omit<P, keyof AuthUserWrappedProps>;
 
-export const withAuthUser = <P extends AuthUserWrappedProps>(
-	WrappedComponent: ComponentType<any>,
+export const withAuthUser = <
+	P extends AuthUserWrappedProps = AuthUserWrappedProps
+>(
+	WrappedComponent: ComponentType<P>,
 ): FunctionComponent<WithAuthUserProps<P>> =>
 	function WrappedWithAuthUser(props: WithAuthUserProps<P>) {
 		return (

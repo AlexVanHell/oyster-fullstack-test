@@ -17,6 +17,17 @@ export class AuthService {
 	}
 
 	/**
+	 * Authenticate user
+	 * @param user User's data
+	 * @param token User's access token
+	 */
+	public async authenticate(user: UserModel, token: string) {
+		const resUser = this.setUser(user);
+		const resToken = this.setToken(token);
+		return { user: resUser, token: resToken };
+	}
+
+	/**
 	 * Get authorization token
 	 */
 	public getToken() {
@@ -24,7 +35,7 @@ export class AuthService {
 			return null;
 		}
 
-		return localStorage.getItem(this.tokenKey);
+		return localStorage.getItem(this.tokenKey) || undefined;
 	}
 
 	/**
@@ -41,7 +52,7 @@ export class AuthService {
 	 */
 	public getUser() {
 		const str = localStorage.getItem(this.sessionKey);
-		return str ? (JSON.parse(str) as UserModel) : null;
+		return str ? (JSON.parse(str) as UserModel) : undefined;
 	}
 
 	/**
@@ -72,7 +83,7 @@ export class AuthService {
 	/**
 	 * Remove user authentication
 	 */
-	public deleteUser() {
+	public async deleteUser() {
 		localStorage.removeItem(this.sessionKey);
 		localStorage.removeItem(this.tokenKey);
 	}

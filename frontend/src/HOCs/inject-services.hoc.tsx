@@ -33,7 +33,9 @@ export const injectServices = <
 		}, {} as ServicesNamesInterface);
 	};
 
-	return function Wrapped({ ...props }: WithInjectServicesProps<P>) {
+	return function WrappedWithInjectServices({
+		...props
+	}: WithInjectServicesProps<P>) {
 		return (
 			<ServiceContext.Consumer>
 				{(s) => (

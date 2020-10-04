@@ -17,10 +17,10 @@ export class AuthApiService {
 			this.endpoint
 		}/login`;
 		const req = `${username}:${password}`;
-		const encoded = window.atob(req);
+		const encoded = window.btoa(req);
 
 		const headers = {
-			Authorization: encoded,
+			Authorization: `Basic ${encoded}`,
 		};
 
 		try {
@@ -30,6 +30,7 @@ export class AuthApiService {
 
 			return response.data;
 		} catch (err) {
+			console.error('Response Error --->', err);
 			throw (err as AxiosError).response;
 		}
 	}

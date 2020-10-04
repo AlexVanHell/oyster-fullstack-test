@@ -1,5 +1,6 @@
 $navbar-bg: #fff;
 $navbar-height: 64px;
+$navbar-logo-space: 16px;
 
 .Navbar-container {
 	position: fixed;
@@ -17,6 +18,14 @@ $navbar-height: 64px;
 		width: 100%;
 		box-sizing: border-box;
 		padding: 0 24px;
+
+		.Navbar-logo-container {
+			padding-right: $navbar-logo-space;
+
+			img {
+				height: $navbar-height - 24px;
+			}
+		}
 
 		h2 {
 			flex-grow: 1;

@@ -6,7 +6,11 @@ import React, { Component, Fragment } from 'react';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import {
+	FormattedMessage,
+	injectIntl,
+	WrappedComponentProps,
+} from 'react-intl';
 
 export interface LoginFormFieldProps {
 	className?: string;
@@ -58,18 +62,18 @@ export class LoginFormField extends Component<
 								</InputGroup.Text>
 							</InputGroup.Prepend>
 							<FormControl
+								{...field}
 								className={className || ''}
 								placeholder={placeholder}
 								aria-label={placeholder}
 								aria-describedby={iconAddonId}
-								{...field}
 								type={type}
 								isInvalid={touched && !!errors[name]}
 							/>
 							{children}
-							{touched && (
+							{touched && errors[name] && (
 								<Form.Control.Feedback type="invalid">
-									{errors[name]}
+									<FormattedMessage id={errors[name]} />
 								</Form.Control.Feedback>
 							)}
 						</InputGroup>
