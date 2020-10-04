@@ -3,14 +3,23 @@
 This project consists on a fullstack development test based on Node JS and React JS
 
 - [Oyster fullstack development Test](#oyster-fullstack-development-test)
-	- [Project composition](#project-composition)
-		- [Backend](#backend)
-		- [Frontend](#frontend)
-	- [First steps](#first-steps)
-		- [Docker](#docker)
-		- [Environment configuration](#environment-configuration)
-	- [Project startup](#project-startup)
-	- [Project visualization](#project-visualization)
+  - [Project composition](#project-composition)
+    - [Backend](#backend)
+    - [Frontend](#frontend)
+  - [First steps](#first-steps)
+    - [Docker](#docker)
+  - [Project startup](#project-startup)
+    - [Production Mode](#production-mode)
+    - [Development Mode](#development-mode)
+  - [Project visualization](#project-visualization)
+    - [Frontend](#frontend-1)
+    - [Backend API Docs](#backend-api-docs)
+  - [Test Login](#test-login)
+    - [Production Mode](#production-mode-1)
+    - [Development Mode](#development-mode-1)
+  - [Remove Docker container and images](#remove-docker-container-and-images)
+    - [Development containers](#development-containers)
+    - [Production containers](#production-containers)
 
 ## Project composition
 
@@ -37,7 +46,6 @@ Frontend was created with `create-react-app` command and it uses the dependencie
 - Axios
 - Jest
 - Formik
-- React-Redux
 - React-Bootstrap
 
 ## First steps
@@ -48,28 +56,98 @@ This project has been thinked to run in docker containers, you also can develop 
 
 https://docs.docker.com/get-docker/
 
-### Environment configuration
-
-First copy the contents `.env.example` file into a new file `.env`
-
-```bash
-$ cp ./.env.example ./.env
-```
-
-And finally replace the values in `.env` for the values you need for your environment
-
 ## Project startup
 
-As mentioned above you can start the project using `docker` and `docker-compose`
+NOTE: Use [Production Mode](#production-mode) startup only if you want to see full project working
 
-A `docker-compose.yml` exits on the root to handle all containers creation. So please just run:
+### Production Mode
+
+This mode uses `.env.prod` file for Environment variables for all containers.
+
+1. Run `docker-compose` commad:
 
 ```bash
-$ docker-compose up -d
+$ docker-compose -f docker-compose.prod.yml up -d --build
 ```
 
-That command will build the images and the containers as a daemons. If you don't want to run containers as daemons just remove the `-f` flag in command.
+2. Check [Project visualization](#project-visualization)
+
+### Development Mode
+
+In order to start the full project follow the next steps:
+
+1. Copy `.env.example` content into a new file `.env`
+
+```bash
+$ cp ./.env.example ./env
+```
+
+2. Replace values in your `.env` file. NOTE: Its recomended only to change variables for `env_admin` for this test
+
+3. Run `docker-compose` commad:
+
+```bash
+$ docker-compose up -d --build
+```
+
+That command will build the images and will run the containers as a daemons. If you don't want to run containers as daemons just remove the `-d` flag in command.
 
 ## Project visualization
 
-After successfull creation of containers you can just type http://localhost:3001/ in your browser and start using the application (The url shows up the frontend application)
+### Frontend
+
+Open http://localhost:3001/ in browser
+
+### Backend API Docs
+
+Open http://localhost:3000/api-docs in browser
+
+## Test Login
+
+### Production Mode
+
+For login please check your `.env.prod` variables:
+
+```dotenv
+env_admin_username=admin
+env_admin_email=admin@admin.com
+env_admin_password=admin123
+```
+
+These values will be your credentials to perform a successful login
+
+### Development Mode
+
+For login please check your `.env` variables:
+
+```dotenv
+env_admin_username=<your_username>
+env_admin_email=<your_email>
+env_admin_password=<your_password>
+```
+
+The values used on these variables will be your credentials to perform a successful login
+
+## Remove Docker container and images
+
+### Development containers
+
+```bash
+# Stop containers
+$ docker stop oyster-test-backend oyster-test-database oyster-test-frontend
+# Remove containers
+$ docker container rm oyster-test-backend oyster-test-database oyster-test-frontend
+# Remove images
+$ docker image rm oyster-fullstack-test_backend oyster-fullstack-test_frontend
+```
+
+### Production containers
+
+```bash
+# Stop containers
+$ docker stop oyster-test-backend-prod oyster-test-database oyster-test-frontend-prod
+# Remove containers
+$ docker container rm oyster-test-backend-prod oyster-test-database oyster-test-frontend-prod
+# Remove images
+$ docker image rm oyster-fullstack-test_backend-prod oyster-fullstack-test_frontend-prod
+```
