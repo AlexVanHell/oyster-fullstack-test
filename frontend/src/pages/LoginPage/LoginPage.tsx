@@ -46,7 +46,7 @@ export class LoginPage extends Component<
 		try {
 			return await authApiService.login(values.username, values.password);
 		} catch (err) {
-			if ((err as AxiosResponse).data.code) {
+			if (err && err.data && (err as AxiosResponse).data.code) {
 				this.setState({
 					alertMessage: {
 						variant: 'danger',
