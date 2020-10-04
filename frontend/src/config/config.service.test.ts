@@ -23,10 +23,10 @@ describe('ConfigService', () => {
 		const result = service.get('apiBase');
 		const result2 = service.get('sessionKey');
 
-		expect(result).toBeTruthy();
+		expect(result).toBeDefined();
 		expect(typeof result).toBe('string');
 
-		expect(result2).toBeTruthy();
+		expect(result2).toBeDefined();
 		expect(typeof result2).toBe('string');
 	});
 });

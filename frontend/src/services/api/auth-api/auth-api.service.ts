@@ -34,6 +34,7 @@ export class AuthApiService {
 				throw (err as AxiosError).response;
 			}
 
+			// eslint-disable-next-line
 			throw { data: { code: 'CON00' } };
 		}
 	}
