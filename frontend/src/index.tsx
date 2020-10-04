@@ -1,12 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { IntlProvider } from 'react-intl';
 import App from './App';
+import { flattenMessages } from './common/helpers/flatten-messages.helper';
 import './index.scss';
+import Spanish from './lang/es';
 import * as serviceWorker from './serviceWorker';
+
+const intlEs = flattenMessages(Spanish);
 
 ReactDOM.render(
 	<React.StrictMode>
-		<App />
+		<IntlProvider defaultLocale={'es'} locale={'es'} messages={intlEs}>
+			<App />
+		</IntlProvider>
 	</React.StrictMode>,
 	document.getElementById('root'),
 );

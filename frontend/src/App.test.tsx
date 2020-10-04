@@ -1,8 +1,8 @@
-import { render } from '@testing-library/react';
 import React from 'react';
 import App from './App';
+import JestI18n from './test/test-utils';
 
 test('renders app', () => {
-	const app = render(<App />);
+	const app = JestI18n.mountWithIntl(<App />);
 	expect(app).toBeDefined();
 });
