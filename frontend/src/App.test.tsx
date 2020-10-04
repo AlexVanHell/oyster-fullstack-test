@@ -1,9 +1,8 @@
 import React from 'react';
-import { render } from '@testing-library/react';
 import App from './App';
+import JestI18n from './test/test-utils';
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('renders app', () => {
+	const app = JestI18n.mountWithIntl(<App />);
+	expect(app).toBeDefined();
 });

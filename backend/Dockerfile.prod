@@ -2,13 +2,11 @@ FROM node:12.18.4
 
 WORKDIR /app
 
-COPY ./package.json .
-COPY ./yarn.lock .
+COPY ./backend/package.json .
+COPY ./backend/yarn.lock .
 
 RUN yarn install
 
-COPY . .
-
-COPY ./.env .
+COPY ./backend .
 
 CMD [ "yarn", "start:prod" ]
