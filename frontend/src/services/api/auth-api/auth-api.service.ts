@@ -30,8 +30,11 @@ export class AuthApiService {
 
 			return response.data;
 		} catch (err) {
-			console.error('Response Error --->', err);
-			throw (err as AxiosError).response;
+			if (err.response) {
+				throw (err as AxiosError).response;
+			}
+
+			throw { data: { code: 'CON00' } };
 		}
 	}
 }

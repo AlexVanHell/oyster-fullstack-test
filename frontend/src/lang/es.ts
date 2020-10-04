@@ -1,5 +1,6 @@
 export default {
 	API_ERRORS: {
+		CON00: 'Ocurrio un error al intentar comunicarse con el servidor',
 		GEN00: 'Error interno del servidor. Contacte al administrador',
 		GEN01: 'Error interno del servidor. Contacte al administrador',
 		USR03: 'Usuario y/o contraseña incorrectos',
