@@ -1,6 +1,7 @@
 module.exports = {
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
+		project: 'tsconfig.json',
 		sourceType: 'module',
 		createDefaultProgram: true,
 	},
@@ -8,6 +9,7 @@ module.exports = {
 	extends: [
 		'plugin:@typescript-eslint/eslint-recommended',
 		'plugin:@typescript-eslint/recommended',
+		'plugin:react/recommended',
 		'prettier',
 		'prettier/@typescript-eslint',
 	],
@@ -27,9 +29,9 @@ module.exports = {
 			{
 				accessibility: 'explicit',
 				overrides: {
-					accessors: 'explicit',
+					accessors: 'no-public',
 					constructors: 'no-public',
-					methods: 'explicit',
+					methods: 'no-public',
 					properties: 'off',
 					parameterProperties: 'explicit',
 				},
@@ -41,5 +43,8 @@ module.exports = {
 		'eslint.workingDirectories': [
 			{ directory: './tsconfig.json', changeProcessCWD: true },
 		],
+		react: {
+			version: 'detect',
+		},
 	},
 };

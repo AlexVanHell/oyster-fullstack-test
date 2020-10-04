@@ -1,0 +1,14 @@
+.LoginPage-container {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	.LoginPage-logo-container {
+		img {
+			height: 148px;
+		}
+	}
+}

@@ -1,0 +1,26 @@
+$container-padding: 24px;
+$container-max-width: 480px;
+$inputs-container-padding: 24px 12px;
+
+.LoginForm-container {
+	box-sizing: border-box;
+	padding: $container-padding;
+	max-width: $container-max-width;
+
+	.LoginForm-title {
+		text-align: center;
+	}
+
+	.LoginForm-inputs-container {
+		padding: $inputs-container-padding;
+
+		.LoginForm-password-input:not(.is-invalid) {
+			border-right: none;
+		}
+
+		.LoginForm-password-icon {
+			background-color: transparent;
+			border-left: none;
+		}
+	}
+}

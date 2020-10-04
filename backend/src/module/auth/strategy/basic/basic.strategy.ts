@@ -11,11 +11,6 @@ export class BasicStrategy extends PassportStrategy(Strategy, 'basic') {
 
 	public async validate(username: string, password: string) {
 		const user = await this.authService.validateUser(username, password);
-
-		/* if (!user.active) {
-			throw new ApiException(API_ERRORS.module.USER.NOT_VERIFIED);
-		} */
-
 		return user;
 	}
 }
