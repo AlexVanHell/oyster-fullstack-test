@@ -29,7 +29,9 @@
 - [Table of contents](#table-of-contents)
 - [Environment configuration](#environment-configuration)
 - [Installation](#installation)
+  - [Using yarn](#using-yarn)
 - [Running the app](#running-the-app)
+  - [Using yarn](#using-yarn-1)
 - [Test](#test)
 - [Support](#support)
 - [Stay in touch](#stay-in-touch)
@@ -57,6 +59,12 @@ And finally replace the values in `.env` for the values you need for your enviro
 $ npm install
 ```
 
+### Using yarn
+
+```bash
+$ yarn install
+```
+
 ## Running the app
 
 ```bash
@@ -70,17 +78,19 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+### Using yarn
+
 ## Test
 
 ```bash
 # unit tests
-$ npm run test
+$ yarn test
 
 # e2e tests
-$ npm run test:e2e
+$ yarn test:e2e
 
 # test coverage
-$ npm run test:cov
+$ yarn test:cov
 ```
 
 ## Support
