@@ -1,6 +1,6 @@
-import { I18n } from '@lingui/react';
 import React, { ComponentType, FunctionComponent } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
+import { IntlContext } from 'react-intl';
 
 export interface WithLoadingProps {
 	loading: boolean;
@@ -12,11 +12,11 @@ export const withLoading = <P extends Record<string, any>>(
 	function WrappedWithLoading({ loading, ...props }: WithLoadingProps) {
 		return loading ? (
 			<Spinner animation="border" role="status">
-				<I18n>
-					{({ i18n }) => (
-						<span className="sr-only">{i18n._('loading', {})}</span>
+				<IntlContext.Consumer>
+					{({ formatMessage }) => (
+						<span className="sr-only">{formatMessage({ id: 'loading' })}</span>
 					)}
-				</I18n>
+				</IntlContext.Consumer>
 			</Spinner>
 		) : (
 			<WrappedComponent {...(props as P)} />
