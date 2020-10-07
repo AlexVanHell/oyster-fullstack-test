@@ -111,6 +111,8 @@ $ docker-compose up -d --build
 
 That command will build the images and will run the containers as a daemons. If you don't want to run containers as daemons just remove the `-d` flag in command.
 
+6. Check [Project visualization](#project-visualization)
+
 ## Project visualization
 
 ### Frontend
