@@ -3,6 +3,9 @@ version: '3.7'
 networks:
   database:
 
+volumes:
+  mongo_data:
+
 services:
   database:
     image: mongo:4.4
@@ -15,6 +18,11 @@ services:
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
     ports:
       - 27017:27017
+    volumes:
+      - ./.docker/mongodb/mongod.conf:/etc/mongod.conf
+      - ./.docker/mongodb/initdb.d/:/docker-entrypoint-initdb.d/
+      - mongo_data:/data/db/
+      - ./.docker/mongodb/data/log/:/var/log/mongodb/
     networks:
       database:
         aliases:

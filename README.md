@@ -66,8 +66,19 @@ This mode uses `.env.prod` file for Environment variables for all containers.
 
 1. Run `docker-compose` commad:
 
+NOTE: Please review `startup.sh` commands first if you already ran `docker-compose` for a clean startup
+
 ```bash
+# Run normally
+$ docker-compose -f docker-compose.prod.yml up --build
+# Run as daemon
 $ docker-compose -f docker-compose.prod.yml up -d --build
+```
+
+Or if you are in UNIX based OS and you want a clean startup run:
+
+```bash
+$ sh ./startup.sh
 ```
 
 2. Check [Project visualization](#project-visualization)
@@ -99,6 +110,8 @@ $ docker-compose up -d --build
 ```
 
 That command will build the images and will run the containers as a daemons. If you don't want to run containers as daemons just remove the `-d` flag in command.
+
+6. Check [Project visualization](#project-visualization)
 
 ## Project visualization
 
