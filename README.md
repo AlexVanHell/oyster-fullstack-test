@@ -10,6 +10,7 @@ This project consists on a fullstack development test based on Node JS and React
     - [Docker](#docker)
   - [Project startup](#project-startup)
     - [Production Mode](#production-mode)
+      - [Using script](#using-script)
     - [Development Mode](#development-mode)
   - [Project visualization](#project-visualization)
     - [Frontend](#frontend-1)
@@ -64,9 +65,25 @@ NOTE: Use [Production Mode](#production-mode) startup only if you want to see fu
 
 This mode uses `.env.prod` file for Environment variables for all containers.
 
-1. Run `docker-compose` commad:
-
 NOTE: Please review `startup.sh` commands first if you already ran `docker-compose` for a clean startup
+
+#### Using script
+
+If you are in UNIX based OS you can simply run:
+
+```bash
+$ sh ./production-startup.sh
+```
+
+#### With docker-compose
+
+1. Copy `.env.prod` file into a new `.env` file
+
+```bash
+$ cp ./.env.prod ./.env
+```
+
+2. Run `docker-compose` commad:
 
 ```bash
 # Run normally
@@ -75,13 +92,7 @@ $ docker-compose -f docker-compose.prod.yml up --build
 $ docker-compose -f docker-compose.prod.yml up -d --build
 ```
 
-Or if you are in UNIX based OS and you want a clean startup run:
-
-```bash
-$ sh ./startup.sh
-```
-
-2. Check [Project visualization](#project-visualization)
+1. Check [Project visualization](#project-visualization)
 
 ### Development Mode
 
@@ -166,9 +177,9 @@ $ docker image rm oyster-fullstack-test_backend oyster-fullstack-test_frontend
 
 ```bash
 # Stop containers
-$ docker stop oyster-test-backend-prod oyster-test-database oyster-test-frontend-prod
+$ docker stop oyster-test-database-prod oyster-test-backend-prod oyster-test-frontend-prod
 # Remove containers
-$ docker container rm oyster-test-backend-prod oyster-test-database oyster-test-frontend-prod
+$ docker container rm oyster-test-database-prod oyster-test-backend-prod oyster-test-frontend-prod
 # Remove images
 $ docker image rm oyster-fullstack-test_backend-prod oyster-fullstack-test_frontend-prod
 ```
