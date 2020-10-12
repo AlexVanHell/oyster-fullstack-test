@@ -3,6 +3,9 @@
 # Remove mongo data directory
 rm -rf ./.docker/mongodb/data
 
+# Copy .env.prod into .env
+cp ./.env.prod ./.env
+
 # Down services
 docker-compose down
 

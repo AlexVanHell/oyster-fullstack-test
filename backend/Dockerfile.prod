@@ -9,6 +9,8 @@ RUN yarn install
 
 COPY ./backend .
 
+COPY ./.env.prod ./.env
+
 RUN yarn build
 
 CMD [ "yarn", "start:prod" ]
